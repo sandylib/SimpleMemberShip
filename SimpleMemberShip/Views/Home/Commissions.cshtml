@@ -1,0 +1,16 @@
+﻿@model List<SimpleMemberShip.Models.Commission>
+<h2>Commissions</h2>
+
+
+<form method="get" action="@Url.Action("Commissions","Home")"
+      data-ajax="true" data-target="#comList">
+    <input type="text" name="StartDate" id="StateDate" value="" class="datePicker" placeholder="Start Date eg:2013-09-02" />
+    <input type="text" name="EndDate" class="datePicker" id="EndDate" value="" placeholder="End Date  eg:2013-09-02" />
+    <input type="submit" value="Submit" class="btn btn-primary js-submit" />
+</form>
+
+<div id="#comList">
+    @Html.Partial("_ListCommisions", Model)
+</div>
+
+<script src="~/Scripts/commission.js"></script>

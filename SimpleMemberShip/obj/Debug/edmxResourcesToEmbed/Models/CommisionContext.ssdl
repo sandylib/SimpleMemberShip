@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Models.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Commission">
+    <Key>
+      <PropertyRef Name="CommissionId" />
+    </Key>
+    <Property Name="CommissionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CustomerId" Type="int" Nullable="false" />
+    <Property Name="DealerId" Type="int" Nullable="false" />
+    <Property Name="ProductId" Type="int" Nullable="false" />
+    <Property Name="CommissionAmount" Type="money" Nullable="false" />
+    <Property Name="PaymentStatusId" Type="int" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CommissionHistory">
+    <Key>
+      <PropertyRef Name="CommissionHistoryId" />
+    </Key>
+    <Property Name="CommissionHistoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CommissionId" Type="int" Nullable="false" />
+    <Property Name="ExistingCustomerId" Type="int" Nullable="false" />
+    <Property Name="NewCustomerId" Type="int" Nullable="false" />
+    <Property Name="ExistingDealerId" Type="int" Nullable="false" />
+    <Property Name="NewDealerId" Type="int" Nullable="false" />
+    <Property Name="ExistingProductId" Type="int" Nullable="false" />
+    <Property Name="NewProductId" Type="int" Nullable="false" />
+    <Property Name="ExistingCommissionAmount" Type="money" Nullable="false" />
+    <Property Name="NewCommissionAmount" Type="money" Nullable="false" />
+    <Property Name="ExistingPaymentStatusId" Type="int" Nullable="false" />
+    <Property Name="NewPaymentStatusId" Type="int" Nullable="false" />
+    <Property Name="ActionDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Dealer">
+    <Key>
+      <PropertyRef Name="DealerId" />
+    </Key>
+    <Property Name="DealerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="ParentDealerId" Type="int" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="ProductId" />
+    </Key>
+    <Property Name="ProductId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProductCategory">
+    <Key>
+      <PropertyRef Name="ProductCategoryId" />
+    </Key>
+    <Property Name="ProductCategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProductCategoryMapping">
+    <Key>
+      <PropertyRef Name="ProductCategoryMappingId" />
+    </Key>
+    <Property Name="ProductCategoryMappingId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductId" Type="int" Nullable="false" />
+    <Property Name="ProductCategoryId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <Association Name="FK_Commission_Dealer">
+    <End Role="Dealer" Type="Self.Dealer" Multiplicity="1" />
+    <End Role="Commission" Type="Self.Commission" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Dealer">
+        <PropertyRef Name="DealerId" />
+      </Principal>
+      <Dependent Role="Commission">
+        <PropertyRef Name="DealerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CommissionHistory_Commission">
+    <End Role="Commission" Type="Self.Commission" Multiplicity="1" />
+    <End Role="CommissionHistory" Type="Self.CommissionHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Commission">
+        <PropertyRef Name="CommissionId" />
+      </Principal>
+      <Dependent Role="CommissionHistory">
+        <PropertyRef Name="CommissionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductCategoryMapping_Product">
+    <End Role="Product" Type="Self.Product" Multiplicity="1" />
+    <End Role="ProductCategoryMapping" Type="Self.ProductCategoryMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="ProductId" />
+      </Principal>
+      <Dependent Role="ProductCategoryMapping">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductCategoryMapping_ProductCategory">
+    <End Role="ProductCategory" Type="Self.ProductCategory" Multiplicity="1" />
+    <End Role="ProductCategoryMapping" Type="Self.ProductCategoryMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductCategory">
+        <PropertyRef Name="ProductCategoryId" />
+      </Principal>
+      <Dependent Role="ProductCategoryMapping">
+        <PropertyRef Name="ProductCategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ModelsStoreContainer">
+    <EntitySet Name="Commission" EntityType="Self.Commission" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CommissionHistory" EntityType="Self.CommissionHistory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Dealer" EntityType="Self.Dealer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductCategory" EntityType="Self.ProductCategory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductCategoryMapping" EntityType="Self.ProductCategoryMapping" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Commission_Dealer" Association="Self.FK_Commission_Dealer">
+      <End Role="Dealer" EntitySet="Dealer" />
+      <End Role="Commission" EntitySet="Commission" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CommissionHistory_Commission" Association="Self.FK_CommissionHistory_Commission">
+      <End Role="Commission" EntitySet="Commission" />
+      <End Role="CommissionHistory" EntitySet="CommissionHistory" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductCategoryMapping_Product" Association="Self.FK_ProductCategoryMapping_Product">
+      <End Role="Product" EntitySet="Product" />
+      <End Role="ProductCategoryMapping" EntitySet="ProductCategoryMapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductCategoryMapping_ProductCategory" Association="Self.FK_ProductCategoryMapping_ProductCategory">
+      <End Role="ProductCategory" EntitySet="ProductCategory" />
+      <End Role="ProductCategoryMapping" EntitySet="ProductCategoryMapping" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Models" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Commission">
+    <Key>
+      <PropertyRef Name="CommissionId" />
+    </Key>
+    <Property Name="CommissionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerId" Type="Int32" Nullable="false" />
+    <Property Name="DealerId" Type="Int32" Nullable="false" />
+    <Property Name="ProductId" Type="Int32" Nullable="false" />
+    <Property Name="CommissionAmount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="PaymentStatusId" Type="Int32" Nullable="false" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Dealer" Relationship="Self.FK_Commission_Dealer" FromRole="Commission" ToRole="Dealer" />
+    <NavigationProperty Name="CommissionHistories" Relationship="Self.FK_CommissionHistory_Commission" FromRole="Commission" ToRole="CommissionHistory" />
+  </EntityType>
+  <EntityType Name="CommissionHistory">
+    <Key>
+      <PropertyRef Name="CommissionHistoryId" />
+    </Key>
+    <Property Name="CommissionHistoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CommissionId" Type="Int32" Nullable="false" />
+    <Property Name="ExistingCustomerId" Type="Int32" Nullable="false" />
+    <Property Name="NewCustomerId" Type="Int32" Nullable="false" />
+    <Property Name="ExistingDealerId" Type="Int32" Nullable="false" />
+    <Property Name="NewDealerId" Type="Int32" Nullable="false" />
+    <Property Name="ExistingProductId" Type="Int32" Nullable="false" />
+    <Property Name="NewProductId" Type="Int32" Nullable="false" />
+    <Property Name="ExistingCommissionAmount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="NewCommissionAmount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="ExistingPaymentStatusId" Type="Int32" Nullable="false" />
+    <Property Name="NewPaymentStatusId" Type="Int32" Nullable="false" />
+    <Property Name="ActionDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Commission" Relationship="Self.FK_CommissionHistory_Commission" FromRole="CommissionHistory" ToRole="Commission" />
+  </EntityType>
+  <EntityType Name="Dealer">
+    <Key>
+      <PropertyRef Name="DealerId" />
+    </Key>
+    <Property Name="DealerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ParentDealerId" Type="Int32" />
+    <NavigationProperty Name="Commissions" Relationship="Self.FK_Commission_Dealer" FromRole="Dealer" ToRole="Commission" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="ProductId" />
+    </Key>
+    <Property Name="ProductId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="ProductCategoryMappings" Relationship="Self.FK_ProductCategoryMapping_Product" FromRole="Product" ToRole="ProductCategoryMapping" />
+  </EntityType>
+  <EntityType Name="ProductCategory">
+    <Key>
+      <PropertyRef Name="ProductCategoryId" />
+    </Key>
+    <Property Name="ProductCategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="ProductCategoryMappings" Relationship="Self.FK_ProductCategoryMapping_ProductCategory" FromRole="ProductCategory" ToRole="ProductCategoryMapping" />
+  </EntityType>
+  <EntityType Name="ProductCategoryMapping">
+    <Key>
+      <PropertyRef Name="ProductCategoryMappingId" />
+    </Key>
+    <Property Name="ProductCategoryMappingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductId" Type="Int32" Nullable="false" />
+    <Property Name="ProductCategoryId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Product" Relationship="Self.FK_ProductCategoryMapping_Product" FromRole="ProductCategoryMapping" ToRole="Product" />
+    <NavigationProperty Name="ProductCategory" Relationship="Self.FK_ProductCategoryMapping_ProductCategory" FromRole="ProductCategoryMapping" ToRole="ProductCategory" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <Association Name="FK_Commission_Dealer">
+    <End Role="Dealer" Type="Self.Dealer" Multiplicity="1" />
+    <End Role="Commission" Type="Self.Commission" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Dealer">
+        <PropertyRef Name="DealerId" />
+      </Principal>
+      <Dependent Role="Commission">
+        <PropertyRef Name="DealerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CommissionHistory_Commission">
+    <End Role="Commission" Type="Self.Commission" Multiplicity="1" />
+    <End Role="CommissionHistory" Type="Self.CommissionHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Commission">
+        <PropertyRef Name="CommissionId" />
+      </Principal>
+      <Dependent Role="CommissionHistory">
+        <PropertyRef Name="CommissionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductCategoryMapping_Product">
+    <End Role="Product" Type="Self.Product" Multiplicity="1" />
+    <End Role="ProductCategoryMapping" Type="Self.ProductCategoryMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="ProductId" />
+      </Principal>
+      <Dependent Role="ProductCategoryMapping">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductCategoryMapping_ProductCategory">
+    <End Role="ProductCategory" Type="Self.ProductCategory" Multiplicity="1" />
+    <End Role="ProductCategoryMapping" Type="Self.ProductCategoryMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductCategory">
+        <PropertyRef Name="ProductCategoryId" />
+      </Principal>
+      <Dependent Role="ProductCategoryMapping">
+        <PropertyRef Name="ProductCategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="CommisionContext" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Commissions" EntityType="Self.Commission" />
+    <EntitySet Name="CommissionHistories" EntityType="Self.CommissionHistory" />
+    <EntitySet Name="Dealers" EntityType="Self.Dealer" />
+    <EntitySet Name="Products" EntityType="Self.Product" />
+    <EntitySet Name="ProductCategories" EntityType="Self.ProductCategory" />
+    <EntitySet Name="ProductCategoryMappings" EntityType="Self.ProductCategoryMapping" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <AssociationSet Name="FK_Commission_Dealer" Association="Self.FK_Commission_Dealer">
+      <End Role="Dealer" EntitySet="Dealers" />
+      <End Role="Commission" EntitySet="Commissions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CommissionHistory_Commission" Association="Self.FK_CommissionHistory_Commission">
+      <End Role="Commission" EntitySet="Commissions" />
+      <End Role="CommissionHistory" EntitySet="CommissionHistories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductCategoryMapping_Product" Association="Self.FK_ProductCategoryMapping_Product">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="ProductCategoryMapping" EntitySet="ProductCategoryMappings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductCategoryMapping_ProductCategory" Association="Self.FK_ProductCategoryMapping_ProductCategory">
+      <End Role="ProductCategory" EntitySet="ProductCategories" />
+      <End Role="ProductCategoryMapping" EntitySet="ProductCategoryMappings" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,19 @@
+﻿<h1> Welcome to Commission Center</h1>
+
+
+<h3>Please login to view your commissions</h3>
+
+@if (User.Identity.IsAuthenticated)
+{
+    if (User.IsInRole("Admin"))
+    {
+
+        <li>@Html.ActionLink("Click me to see all commission", "Commissions", "Home")</li>
+    }
+    else
+    {
+
+        <li>@Html.ActionLink("Click me to see your commission", "MyCommissions", "Home")</li>
+
+    }
+}

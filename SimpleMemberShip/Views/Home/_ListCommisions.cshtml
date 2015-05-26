@@ -1,0 +1,58 @@
+﻿@model IEnumerable<SimpleMemberShip.Models.Commission>
+
+@if(Model.Count()>0)
+{ 
+    <table>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DealerId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CommissionAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PaymentStatusId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ModifiedDate)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.DealerId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CommissionAmount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PaymentStatusId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ModifiedDate)
+        </td>
+        <td></td>
+    </tr>
+    }
+
+    </table>
+}
+else
+{
+        <p>no misssion found.</p>
+}

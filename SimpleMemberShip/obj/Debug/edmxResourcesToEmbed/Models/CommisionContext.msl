@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ModelsStoreContainer" CdmEntityContainer="CommisionContext">
+    <EntitySetMapping Name="Commissions">
+      <EntityTypeMapping TypeName="Models.Commission">
+        <MappingFragment StoreEntitySet="Commission">
+          <ScalarProperty Name="CommissionId" ColumnName="CommissionId" />
+          <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+          <ScalarProperty Name="DealerId" ColumnName="DealerId" />
+          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+          <ScalarProperty Name="CommissionAmount" ColumnName="CommissionAmount" />
+          <ScalarProperty Name="PaymentStatusId" ColumnName="PaymentStatusId" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CommissionHistories">
+      <EntityTypeMapping TypeName="Models.CommissionHistory">
+        <MappingFragment StoreEntitySet="CommissionHistory">
+          <ScalarProperty Name="CommissionHistoryId" ColumnName="CommissionHistoryId" />
+          <ScalarProperty Name="CommissionId" ColumnName="CommissionId" />
+          <ScalarProperty Name="ExistingCustomerId" ColumnName="ExistingCustomerId" />
+          <ScalarProperty Name="NewCustomerId" ColumnName="NewCustomerId" />
+          <ScalarProperty Name="ExistingDealerId" ColumnName="ExistingDealerId" />
+          <ScalarProperty Name="NewDealerId" ColumnName="NewDealerId" />
+          <ScalarProperty Name="ExistingProductId" ColumnName="ExistingProductId" />
+          <ScalarProperty Name="NewProductId" ColumnName="NewProductId" />
+          <ScalarProperty Name="ExistingCommissionAmount" ColumnName="ExistingCommissionAmount" />
+          <ScalarProperty Name="NewCommissionAmount" ColumnName="NewCommissionAmount" />
+          <ScalarProperty Name="ExistingPaymentStatusId" ColumnName="ExistingPaymentStatusId" />
+          <ScalarProperty Name="NewPaymentStatusId" ColumnName="NewPaymentStatusId" />
+          <ScalarProperty Name="ActionDate" ColumnName="ActionDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Dealers">
+      <EntityTypeMapping TypeName="Models.Dealer">
+        <MappingFragment StoreEntitySet="Dealer">
+          <ScalarProperty Name="DealerId" ColumnName="DealerId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ParentDealerId" ColumnName="ParentDealerId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Products">
+      <EntityTypeMapping TypeName="Models.Product">
+        <MappingFragment StoreEntitySet="Product">
+          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProductCategories">
+      <EntityTypeMapping TypeName="Models.ProductCategory">
+        <MappingFragment StoreEntitySet="ProductCategory">
+          <ScalarProperty Name="ProductCategoryId" ColumnName="ProductCategoryId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProductCategoryMappings">
+      <EntityTypeMapping TypeName="Models.ProductCategoryMapping">
+        <MappingFragment StoreEntitySet="ProductCategoryMapping">
+          <ScalarProperty Name="ProductCategoryMappingId" ColumnName="ProductCategoryMappingId" />
+          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+          <ScalarProperty Name="ProductCategoryId" ColumnName="ProductCategoryId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="Models.sysdiagram">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
